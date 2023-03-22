@@ -1,6 +1,7 @@
 import pygame as pg
 import scenes.scene_main_menu as scene_main_menu
 import scenes.scene_generator as scene_generator
+import draw_lib as dl
 
 #START
 #map = terrain2.Terrain((100,100), 4, sea_level=0.5)

@@ -1,6 +1,6 @@
 import pygame as pg
 import os
-import CONSTANTS
+from CONSTANTS import BLACK, DATA_DIR
 
 # abstract MenuObject
 class MenuObject():
@@ -12,19 +12,32 @@ class MenuObject():
 
 # abstract Clickable
 class Clickable(MenuObject):
-    def __init__(self, x, y, image, scale = 1, image_hover = None, image_click = None) -> None:
+    def __init__(self, x, y, image, scale=1, image_hover=None, image_click=None, 
+                 text="", font=None, text_color=BLACK, text_x=0, text_y=0) -> None:
+        # image vars
         width = image.get_width()
         height = image.get_height()
         self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
+
+        # text vars
+        self.text = text
+        self.font = font
+        self.text_color = text_color
+        self.text_x = text_x + x
+        self.text_y = text_y + y
+
+        # internal state vars
         self.clicked = False
 
+        # setting hover image
         if image_hover is None:
             self.image_hover = self.image
         else:
             self.image_hover = pg.transform.scale(image_hover, (int(width * scale), int(height * scale)))
 
+        # setting click image
         if image_click is None:
             self.image_click = self.image
         else:
@@ -32,9 +45,6 @@ class Clickable(MenuObject):
 
 # Button class
 class Button(Clickable):
-    def __init__(self, x, y, image, scale, image_hover = None, image_click = None) -> None:
-        super().__init__(x, y, image, scale, image_hover=image_hover, image_click=image_click)
-
     def draw(self, surface) -> bool:
         action = False
         hover = False
@@ -53,18 +63,18 @@ class Button(Clickable):
 
         if self.clicked:
             surface.blit(self.image_click, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
         elif hover:
             surface.blit(self.image_hover, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
         else:
             surface.blit(self.image, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
         
         return action
 
 # TextBox class
 class TextBox(Clickable):
-    def __init__(self, x, y, image, scale, image_hover = None, image_click = None):
-        super().__init__(x, y, image, scale, image_hover=image_hover, image_click=image_click)
-
     def draw(self, surface):
         action = False
         hover = False
@@ -94,12 +104,12 @@ class TextBox(Clickable):
 
 # draw text
 def draw_text(screen, text, font, text_col, x, y):
-    img = font.render(text, True, text_col)
+    img = font.render(text)
     screen.blit(img, (x, y))
 
 #load image function
-def load_image(name, colorkey=None, scale=1) -> pg.image:
-    fullname = os.path.join(CONSTANTS.data_dir, name)
+def load_image(name, colorkey=None, scale=1) -> pg.surface.Surface:
+    fullname = os.path.join(DATA_DIR, name)
     image = pg.image.load(fullname)
 
     size = (image.get_size())
@@ -113,3 +123,56 @@ def load_image(name, colorkey=None, scale=1) -> pg.image:
             colorkey = image.get_at((0,0))
         image.set_colorkey(colorkey, pg.RLEACCEL)
     return image
+
+class ImageFont():
+    def __init__(self, font_dir_name, scale=1):
+        self.scale = scale
+        self.characters = {}
+        self.char_len = {}
+        font_dir_path = os.path.join(DATA_DIR, font_dir_name)
+        for filename in os.listdir(font_dir_path):
+            character_name = filename.removesuffix(".png")
+
+            if character_name == "period":       character_name = "."
+            elif character_name == "comma":      character_name = ","
+            elif character_name == "word_space": character_name = " "
+
+            filepath = os.path.join(font_dir_path, filename)
+            char_image = load_image(filepath, scale=self.scale)
+            self.characters.update({character_name: char_image})
+            self.char_len.update({character_name: char_image.get_size()[0]})
+    
+    def render(self, text:str) -> pg.surface.Surface:
+        # turn text string into list of characters
+        text = [*text]
+        # define the space between characters character early because it will be used a lot
+        char_space = self.characters.get("char_space")
+        # some important position tracking variables
+        pos_x = 0
+        text_len = 0
+
+        # loop over characters and figure out how big the surface to blit to will have to be
+        # this needs to happen because each character isnt the same length
+        for character in text:
+            if not character in self.char_len.keys(): text_len += list(self.char_len.values())[0]
+            else: text_len += self.char_len.get(character)
+            text_len += self.char_len.get("char_space")
+
+        # define text_image which will be returned
+        base_size = list(self.characters.values())[0].get_size()
+        text_image = pg.surface.Surface((text_len*self.scale, base_size[1]*self.scale), pg.SRCALPHA).convert_alpha()
+
+        for character in text:
+            # check if character actually exists, if not, return first in self.characters
+            if not character in self.characters.keys(): char_image = list(self.characters.values())[0]
+            else: char_image = self.characters.get(character)
+            
+            # blit character and character space to text_image
+            text_image.blit(char_image, (pos_x, 0))
+            text_image.blit(char_space, (pos_x + char_image.get_size()[0], 0) )
+
+            # update position to draw next character
+            pos_x += char_image.get_size()[0] + self.char_len.get("char_space")
+        
+        # return text_image generated
+        return text_image

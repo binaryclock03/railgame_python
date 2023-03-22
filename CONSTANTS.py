@@ -2,11 +2,15 @@ import os
 import pygame as pg
 
 # define paths
-main_dir = os.path.split(os.path.abspath(__file__))[0]
-data_dir = os.path.join(main_dir, 'data')
+MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
+DATA_DIR = os.path.join(MAIN_DIR, 'data')
 
 # define fonts
-#font = pg.font.SysFont("arialblack", 40)
+#FONT = ImageFont("fonts\pixel_small")
 
 # define colors
-TEXT_COL = (255, 255, 255)
+BLACK = (  0,   0,   0)
+WHITE = (255, 255, 255)
+RED =   (255,   0,   0)
+BLUE =  (  0,   0, 255)
+GREEN = (  0, 255,   0)
