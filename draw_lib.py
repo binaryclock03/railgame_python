@@ -93,14 +93,15 @@ class TextBox(Clickable):
 
         if self.clicked:
             surface.blit(self.image_click, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         elif hover:
             surface.blit(self.image_hover, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         else:
             surface.blit(self.image, (self.rect.x, self.rect.y))
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         
         return action
-
-
 
 # draw text
 def draw_text(screen, text, font, x, y, text_col=(0,0,0)):
@@ -123,6 +124,43 @@ def load_image(name, colorkey=None, scale=1) -> pg.surface.Surface:
             colorkey = image.get_at((0,0))
         image.set_colorkey(colorkey, pg.RLEACCEL)
     return image
+
+# creates multisegment box
+def mutli_box(box_dir_name, size:tuple) -> pg.surface.Surface:
+    box_dir_path = os.path.join(DATA_DIR, box_dir_name)
+
+    segment_names = ["single", "start", "middle", "end", "top_left", "top_mid", "top_right", "mid_right", "bot_right", "bot_mid", "bot_left", "mid_left", "mid_mid"]
+
+    segments = {}
+    for segment_name in segment_names:
+        segments.update({segment_name:load_image(os.path.join(box_dir_path, segment_name + ".png"))})
+
+    # single panel
+    if size[0] == 1:
+        return segments.get("single")
+    
+    # horizontal panel
+    if size[1] == 1:
+        start_extra = segments.get("start").get_size()[0] - segments.get("middle").get_size()[0]
+        end_extra   = segments.get("end").get_size()[0]   - segments.get("middle").get_size()[0]
+        print(end_extra)
+        textbox_image = pg.surface.Surface(((segments.get("middle").get_size()[0] * size[0]) + start_extra + end_extra, segments.get("single").get_size()[0]), pg.SRCALPHA).convert_alpha()
+        pos_x = 0
+        for x in range(size[0]):
+            if x == 0:
+                name_type = "start"
+            elif x == size[0]-1:
+                name_type = "end"
+            else:
+                name_type = "middle"
+            
+            segment = segments.get(name_type)
+            textbox_image.blit(segment, (pos_x, 0))
+            pos_x += segment.get_size()[0]
+
+        return textbox_image
+    
+
 
 class ImageFont():
     def __init__(self, font_dir_name, scale=1):

@@ -23,11 +23,14 @@ class Terrain:
         self._terrain_generator = TerrainGenerator(self._seed)
 
     def generate_world_map(self):
-        test = []
         for x in range(self._shape_chunks[0]):
             for y in range(self._shape_chunks[1]):
                 generated_chunk = self.generate_chunk((x,y))
                 self._heightmap.set_chunk((x,y), generated_chunk)
+
+    def set_seed(self, seed:int):
+        self._seed = seed
+        self._terrain_generator = TerrainGenerator(self._seed)
 
     def generate_chunk(self, coords: tuple):
         return self._terrain_generator.generate_chunk(coords, self.world_map_res)

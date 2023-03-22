@@ -1,21 +1,23 @@
 import pygame as pg
 import sys
 import time
-from draw_lib import Button, TextBox, load_image, ImageFont
+from draw_lib import Button, TextBox, load_image, ImageFont, mutli_box
 
 def run_scene(screen):
     running = True
 
     font_pixel = ImageFont("fonts\pixel_small", scale=3)
-    font_dot_matrix = ImageFont("fonts\dot_matrix", scale=1)
+
+    scale_tb = 8/7
+    font_dot_matrix = ImageFont("fonts\dot_matrix", scale=scale_tb)
 
     buttons_x = 300
 
     # instantiating buttons
     main_menu_objects:dict = {}
     TEXT_OFFSET_MENU_BUTTON = (18, 18)
-    IMAGES_MENU_BUTTON =  [load_image("menu\\red_sepha_button.png"), load_image("menu\\yel_sepha_button.png"), None]
-    IMAGES_MENU_TEXTBOX = [load_image("menu\\red_sepha_button.png"), None, load_image("menu\\yel_sepha_button.png")]
+    IMAGES_MENU_BUTTON =  [load_image("menu\\sepha_button\\red_sepha_button.png"), load_image("menu\\sepha_button\\yel_sepha_button.png"), None]
+    IMAGES_MENU_TEXTBOX = [load_image("menu\\sepha_button\\red_sepha_button.png"), None, load_image("menu\\sepha_button\\yel_sepha_button.png")]
 
     main_menu_objects.update({"New Game" :  Button((buttons_x, 340), IMAGES_MENU_BUTTON,  6,
                                                     text="NEW GAME", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
@@ -35,8 +37,11 @@ def run_scene(screen):
                                                    text="GENERATE", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
     new_game_1_objects.update({"Back" :     Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
                                                    text="BACK", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
-    new_game_1_objects.update({"Name TB" :  TextBox((buttons_x, 140), IMAGES_MENU_TEXTBOX, 6,
-                                                    text="NAME", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    
+    tb = mutli_box("menu\\dot_matrix_textbox", (12,1))
+    tb_images = [tb, None, None]
+    new_game_1_objects.update({"Name TB" :  TextBox((buttons_x, 140), tb_images, scale_tb,
+                                                    text="A B A B A B ", text_offset=(7*scale_tb, 7*scale_tb), font=font_dot_matrix)})
 
     load_game_1_objects:dict = {}
     load_game_1_objects.update({"Back" :    Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
