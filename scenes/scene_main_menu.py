@@ -13,25 +13,34 @@ def run_scene(screen):
 
     # instantiating buttons
     main_menu_objects:dict = {}
-    main_menu_objects.update({"New Game" :  Button(buttons_x, 340, load_image("menu\\red_sepha_button.png"),  6, image_hover=load_image("menu\\yel_sepha_button.png")
-                                                   , text="NEW GAME", text_x=18, text_y=18, font=font_pixel)})
-    main_menu_objects.update({"Load Game" : Button(buttons_x, 440, load_image("menu\\red_sepha_button.png"),  6, image_hover=load_image("menu\\yel_sepha_button.png")
-                                                   , text="LOAD GAME", text_x=18, text_y=18, font=font_pixel)})
-    main_menu_objects.update({"Settings" :  Button(buttons_x, 540, load_image("menu\\red_sepha_button.png"),  6, image_hover=load_image("menu\\yel_sepha_button.png")
-                                                   , text="SETTINGS", text_x=18, text_y=18, font=font_pixel)})
-    main_menu_objects.update({"Quit" :      Button(buttons_x, 640, load_image("menu\\red_sepha_button.png"),  6, image_hover=load_image("menu\\yel_sepha_button.png")
-                                                   , text="QUIT", text_x=18, text_y=18, font=font_pixel)})
+    TEXT_OFFSET_MENU_BUTTON = (18, 18)
+    IMAGES_MENU_BUTTON =  [load_image("menu\\red_sepha_button.png"), load_image("menu\\yel_sepha_button.png"), None]
+    IMAGES_MENU_TEXTBOX = [load_image("menu\\red_sepha_button.png"), None, load_image("menu\\yel_sepha_button.png")]
+
+    main_menu_objects.update({"New Game" :  Button((buttons_x, 340), IMAGES_MENU_BUTTON,  6,
+                                                    text="NEW GAME", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    main_menu_objects.update({"Load Game" : Button((buttons_x, 440), IMAGES_MENU_BUTTON,  6,
+                                                    text="LOAD GAME", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    main_menu_objects.update({"Settings" :  Button((buttons_x, 540), IMAGES_MENU_BUTTON,  6,
+                                                    text="SETTINGS", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    main_menu_objects.update({"Quit" :      Button((buttons_x, 640), IMAGES_MENU_BUTTON,  6,
+                                                    text="QUIT", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
 
     settings_1_objects:dict = {}
-    settings_1_objects.update({"Back" :     Button(buttons_x, 640, load_image("menu/back_red.png"),      6, image_hover=load_image("menu/back_yel.png"))})
+    settings_1_objects.update({"Back" :     Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
+                                                   text="BACK", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
 
     new_game_1_objects:dict = {}
-    new_game_1_objects.update({"Generate" : Button(buttons_x, 540, load_image("menu/generate_red.png"),  6, image_hover=load_image("menu/generate_yel.png"))})
-    new_game_1_objects.update({"Back" :     Button(buttons_x, 640, load_image("menu/back_red.png"),      6, image_hover=load_image("menu/back_yel.png"))})
-    new_game_1_objects.update({"Name TB" :  TextBox(buttons_x, 140, load_image("menu/name_tb.png"),      6)})
+    new_game_1_objects.update({"Generate" : Button((buttons_x, 540), IMAGES_MENU_BUTTON, 6,
+                                                   text="GENERATE", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    new_game_1_objects.update({"Back" :     Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
+                                                   text="BACK", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
+    new_game_1_objects.update({"Name TB" :  TextBox((buttons_x, 140), IMAGES_MENU_TEXTBOX, 6,
+                                                    text="NAME", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
 
     load_game_1_objects:dict = {}
-    load_game_1_objects.update({"Back" :    Button(buttons_x, 640, load_image("menu/back_red.png"),      6, image_hover=load_image("menu/back_yel.png"))})
+    load_game_1_objects.update({"Back" :    Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
+                                                    text="BACK", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
 
 
 
@@ -72,7 +81,7 @@ def run_scene(screen):
             new_game_1_objects.get("Name TB").draw (screen)
 
             if new_game_1_objects.get("Generate").draw(screen):
-                pass
+                return "generator"
             if new_game_1_objects.get("Back").draw(screen):
                 menu_state = "main_menu"
                 time.sleep(0.1)

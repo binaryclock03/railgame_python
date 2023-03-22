@@ -5,9 +5,6 @@ import pygame as pg
 MAIN_DIR = os.path.split(os.path.abspath(__file__))[0]
 DATA_DIR = os.path.join(MAIN_DIR, 'data')
 
-# define fonts
-#FONT = ImageFont("fonts\pixel_small")
-
 # define colors
 BLACK = (  0,   0,   0)
 WHITE = (255, 255, 255)

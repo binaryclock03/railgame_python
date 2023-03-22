@@ -12,36 +12,36 @@ class MenuObject():
 
 # abstract Clickable
 class Clickable(MenuObject):
-    def __init__(self, x, y, image, scale=1, image_hover=None, image_click=None, 
-                 text="", font=None, text_color=BLACK, text_x=0, text_y=0) -> None:
+    def __init__(self, position, images, scale=1, 
+                 text="", font=None, text_color=BLACK, text_offset = (0, 0)) -> None:
         # image vars
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pg.transform.scale(image, (int(width * scale), int(height * scale)))
+        width = images[0].get_width()
+        height = images[0].get_height()
+        self.image = pg.transform.scale(images[0], (int(width * scale), int(height * scale)))
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
+        self.rect.topleft = position
 
         # text vars
         self.text = text
         self.font = font
         self.text_color = text_color
-        self.text_x = text_x + x
-        self.text_y = text_y + y
+        self.text_x = text_offset[0] + position[0]
+        self.text_y = text_offset[1] + position[1]
 
         # internal state vars
         self.clicked = False
 
         # setting hover image
-        if image_hover is None:
+        if images[1] is None:
             self.image_hover = self.image
         else:
-            self.image_hover = pg.transform.scale(image_hover, (int(width * scale), int(height * scale)))
+            self.image_hover = pg.transform.scale(images[1], (int(width * scale), int(height * scale)))
 
         # setting click image
-        if image_click is None:
+        if images[2] is None:
             self.image_click = self.image
         else:
-            self.image_click = pg.transform.scale(image_click, (int(width * scale), int(height * scale)))
+            self.image_click = pg.transform.scale(images[2], (int(width * scale), int(height * scale)))
 
 # Button class
 class Button(Clickable):
@@ -63,13 +63,13 @@ class Button(Clickable):
 
         if self.clicked:
             surface.blit(self.image_click, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         elif hover:
             surface.blit(self.image_hover, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         else:
             surface.blit(self.image, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_color, self.text_x, self.text_y)
+            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         
         return action
 
@@ -103,7 +103,7 @@ class TextBox(Clickable):
 
 
 # draw text
-def draw_text(screen, text, font, text_col, x, y):
+def draw_text(screen, text, font, x, y, text_col=(0,0,0)):
     img = font.render(text)
     screen.blit(img, (x, y))
 
