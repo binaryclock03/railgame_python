@@ -75,6 +75,11 @@ class Button(Clickable):
 
 # TextBox class
 class TextBox(Clickable):
+    def __init__(self, position, images, scale=1, 
+                 text="", font=None, text_color=BLACK, text_offset = (0, 0)) -> None:
+        super().__init__(position, images, scale, text=text, font=font, text_color=text_color, text_offset=text_offset)
+        self.written_text = ""
+
     def draw(self, surface):
         action = False
         hover = False
@@ -87,19 +92,31 @@ class TextBox(Clickable):
             if not self.clicked and pg.mouse.get_pressed()[0]:
                 self.clicked = True
                 action = True
-            
-        if self.clicked and pg.mouse.get_pressed()[0] and not hover:
-            self.clicked = False
+
+        if self.clicked:
+            if pg.mouse.get_pressed()[0] and not hover:
+                self.clicked = False
+
+            for event in pg.event.get():
+                if event.type == pg.KEYDOWN:
+                    if event.key== pg.K_BACKSPACE:
+                        self.written_text = self.written_text[:-1]
+                    elif event.key == pg.K_RETURN:
+                        self.clicked = False
+                    else:
+                        self.written_text += event.unicode.upper()
+                pg.event.post(event)
+        
 
         if self.clicked:
             surface.blit(self.image_click, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
+            if not self.font is None: draw_text(surface, self.written_text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         elif hover:
             surface.blit(self.image_hover, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
+            if not self.font is None: draw_text(surface, self.written_text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         else:
             surface.blit(self.image, (self.rect.x, self.rect.y))
-            if not self.font is None: draw_text(surface, self.text, self.font, self.text_x, self.text_y, text_col=self.text_color)
+            if not self.font is None: draw_text(surface, self.written_text, self.font, self.text_x, self.text_y, text_col=self.text_color)
         
         return action
 
@@ -143,7 +160,7 @@ def mutli_box(box_dir_name, size:tuple) -> pg.surface.Surface:
     if size[1] == 1:
         start_extra = segments.get("start").get_size()[0] - segments.get("middle").get_size()[0]
         end_extra   = segments.get("end").get_size()[0]   - segments.get("middle").get_size()[0]
-        print(end_extra)
+        
         textbox_image = pg.surface.Surface(((segments.get("middle").get_size()[0] * size[0]) + start_extra + end_extra, segments.get("single").get_size()[0]), pg.SRCALPHA).convert_alpha()
         pos_x = 0
         for x in range(size[0]):
@@ -159,8 +176,6 @@ def mutli_box(box_dir_name, size:tuple) -> pg.surface.Surface:
             pos_x += segment.get_size()[0]
 
         return textbox_image
-    
-
 
 class ImageFont():
     def __init__(self, font_dir_name, scale=1):

@@ -47,14 +47,18 @@ def run_scene(screen):
     load_game_1_objects.update({"Back" :    Button((buttons_x, 640), IMAGES_MENU_BUTTON, 6,
                                                     text="BACK", text_offset=TEXT_OFFSET_MENU_BUTTON, font=font_pixel)})
 
-
-
     title = load_image("menu/Title.png", scale = 4)
 
     # menu state
     menu_state = "main_menu"
 
+    clock = pg.time.Clock()
+
     while running:
+        dt = clock.tick(60)
+        # print fps
+        #print(1/(dt/1000))
+        
         # draw background
         screen.fill((110, 130, 140))
         
@@ -67,20 +71,20 @@ def run_scene(screen):
             # draw main menu buttons
             if main_menu_objects.get("New Game").draw(screen):
                 menu_state = "new_game_1"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
             if main_menu_objects.get("Load Game").draw(screen):
                 menu_state = "load_game_1"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
             if main_menu_objects.get("Settings").draw(screen):
                 menu_state = "settings_1"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
             if main_menu_objects.get("Quit").draw(screen):
                 sys.exit()
         
         if menu_state == "settings_1":
             if settings_1_objects.get("Back").draw(screen):
                 menu_state = "main_menu"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
 
         if menu_state == "new_game_1":
             new_game_1_objects.get("Name TB").draw (screen)
@@ -89,18 +93,14 @@ def run_scene(screen):
                 return "generator"
             if new_game_1_objects.get("Back").draw(screen):
                 menu_state = "main_menu"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
 
         if menu_state == "load_game_1":
             if load_game_1_objects.get("Back").draw(screen):
                 menu_state = "main_menu"
-                time.sleep(0.1)
+                ##time.sleep(0.1)
 
         for event in pg.event.get():
             if event.type == pg.QUIT: sys.exit()
 
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE:
-                    print("REE")
-        
         pg.display.flip()
