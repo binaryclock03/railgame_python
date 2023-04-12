@@ -121,7 +121,7 @@ class Spline2():
             else:           self.mode = 2
         else:               self.mode = 3
 
-        print(f"Mode: {self.mode}")
+        #print(f"Mode: {self.mode}")
 
         self.recalculate()
         #self.render()
@@ -136,13 +136,12 @@ class Spline2():
             TM = np.array(((c, -s), 
                            (s,  c)))
             
-            print("----------------------------")
-            print(f"D1 pre: {self._d1}")
-            print(f"D1 mag: {np.linalg.norm(self._d1)}")
-            print(f"Theta: {theta}")
+            #print("----------------------------")
+            #print(f"D1 pre: {self._d1}")
+            #print(f"D1 mag: {np.linalg.norm(self._d1)}")
+            #print(f"Theta: {theta}")
             d1 = np.matmul(TM, self._d1)
-            print(f"D1: {d1}")
-            
+            #print(f"D1: {d1}")
 
             P0  = np.matmul(TM, self.node_1.position)
             P0x = P0[0]
@@ -155,8 +154,8 @@ class Spline2():
                 P3[0] = P0x
                 P3x = P0x
 
-            print(f"P1L: {P0}")
-            print(f"P3L: {P3}")
+            #print(f"P1L: {P0}")
+            #print(f"P3L: {P3}")
 
             self.radius = -(-P3x**2+2*P3x*P0x-P0x**2+2*P3y*P0y-P3y**2-P0y**2)/(2*(-P3y+P0y))
 
@@ -166,10 +165,10 @@ class Spline2():
             r_sign = abs(self.radius)/self.radius
             d2 = np.array((-math.cos(self.angle * r_sign), math.sin(self.angle * r_sign)))
             
-            print(f"D2: {d2}")
-            print("--")
-            print("radius: " + str(self.radius))
-            print("angle:  " + str(np.rad2deg(self.angle)))
+            #print(f"D2: {d2}")
+            #print("--")
+            #print("radius: " + str(self.radius))
+            #print("angle:  " + str(np.rad2deg(self.angle)))
 
             a = abs(self.radius) * (6.823804635335345e-8 * np.rad2deg(abs(self.angle))**3 -5.662094427708215e-6 * np.rad2deg(abs(self.angle))**2 + 0.006129092971602482 * np.rad2deg(abs(self.angle)) + -0.0044854458177779515)
 
@@ -203,11 +202,11 @@ class Spline2():
         P1 = P0 + d1 * a
         P2 = P3 + d2 * a
 
-        print(f"P0: {P0}")
-        print(f"P1: {P1}")
-        print(f"P2: {P2}")
-        print(f"P3: {P3}")
-        print(f"a:  {a}")
+        #print(f"P0: {P0}")
+        #print(f"P1: {P1}")
+        #print(f"P2: {P2}")
+        #print(f"P3: {P3}")
+        #print(f"a:  {a}")
 
         points = []
         for t in np.linspace(0, 1, 101):
