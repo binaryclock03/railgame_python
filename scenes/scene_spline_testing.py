@@ -1,8 +1,8 @@
 import pygame as pg
 import sys
-from game.rails import Spline2 as Spline, SplineNode
+from game.splines import Spline as Spline, SplineNode
 from CONSTANTS import WHITE
-from draw_lib import ImageFont, load_image, Button
+from game.menuObject import ImageFont, load_image, Button
 import numpy as np
 
 def run_scene(screen):

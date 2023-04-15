@@ -9,7 +9,7 @@ SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1200,800
 screen = pg.display.set_mode(SCREEN_SIZE)
 
 # game variables
-scene = "main_menu"
+scene = "spline_testing"
 
 while True:
     if scene == "main_menu":

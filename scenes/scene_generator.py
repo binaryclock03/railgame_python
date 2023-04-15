@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 import threading
 import terrain2
-from draw_lib import ImageFont, draw_text, load_image
+from game.menuObject import ImageFont, draw_text, load_image
 
 def run_scene(screen):
     running = True

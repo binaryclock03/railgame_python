@@ -1,7 +1,7 @@
 import pygame as pg
 import sys
 import time
-from draw_lib import Button, TextBox, load_image, ImageFont, mutli_box
+from game.menuObject import Button, TextBox, load_image, ImageFont, mutli_box
 
 def run_scene(screen):
     running = True

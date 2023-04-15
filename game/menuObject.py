@@ -229,3 +229,7 @@ class ImageFont():
         
         # return text_image generated
         return text_image
+
+class Container():
+    def __init__():
+        pass
