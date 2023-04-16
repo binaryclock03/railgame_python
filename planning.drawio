@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="PV8DR9O7Qa6q8P4uxZd3" name="Highlevel World">
-        <mxGraphModel dx="1456" dy="639" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1079" dy="613" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -153,6 +153,47 @@
                 </mxCell>
                 <mxCell id="YPkfwmVV87nAmRGDqk8z-104" value="Unstable Soft" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="YPkfwmVV87nAmRGDqk8z-101">
                     <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="OzycxgkMF5Cx8lGlnGH6" name="Rails">
+        <mxGraphModel dx="1079" dy="613" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-1" value="Rail Layer" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="50" width="350" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-8" value="Rails_id_ob" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-1" vertex="1">
+                    <mxGeometry x="30" y="50" width="140" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-9" value="Rail.id&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;Rail" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-8" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-10" value="Rail.id&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;Rail" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-8" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-11" value="Rail.id&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;Rail" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-8" vertex="1">
+                    <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-12" value="Rail_nodes_id_ob" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-1" vertex="1">
+                    <mxGeometry x="180" y="50" width="140" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-13" value="id&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;RailNode" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-12" vertex="1">
+                    <mxGeometry y="30" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-14" value="id&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;/span&gt;RailNode" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-12" vertex="1">
+                    <mxGeometry y="60" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-15" value="id&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&#9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#9;&lt;/span&gt;&lt;/span&gt;RailNode" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="5XfO2eoXUw8bzg-eXop2-12" vertex="1">
+                    <mxGeometry y="90" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-6" value="Rail&lt;br&gt;.id &quot;{node_1.id}{node_2.id}&quot;&lt;br&gt;.node_1&lt;br&gt;.node_2" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="80" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5XfO2eoXUw8bzg-eXop2-4" value="Rail Node&lt;br&gt;.id &quot;{posx}{posy}&quot;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="160" width="180" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
