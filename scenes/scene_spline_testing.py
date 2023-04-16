@@ -1,6 +1,6 @@
 import pygame as pg
 import sys
-from game.splines import Spline as Spline, SplineNode
+from game.rails.splines import Spline as Spline, SplineNode
 from CONSTANTS import WHITE
 from game.menuObject import ImageFont, load_image, Button
 import numpy as np

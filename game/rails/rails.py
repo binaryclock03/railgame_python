@@ -1,6 +1,6 @@
-from game.splines import Spline, SplineNode
+from game.rails.splines import Spline, SplineNode
 from game.gameObject import GameObject
-import game.rail_id
+import game.rails.rail_id
 import numpy as np
 
 class RailNode():
@@ -62,7 +62,7 @@ class RailLayer():
 
     def _create_rail(self, node_id1:int, node_id2:int):
         # create rail id using id2 to allow for the 2 ids to be store together
-        rail_id = game.rail_id.Id2()
+        rail_id = game.rails.rail_id.Id2()
         rail_id.id1 = node_id1
         rail_id.id2 = node_id2
 
