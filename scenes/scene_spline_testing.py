@@ -61,7 +61,6 @@ def run_scene(screen):
                         splines.append(Spline(node_1=SplineNode(things.get("point")), node_2=SplineNode(point_temp)))
 
                     splines[-1].recalculate()
-                    splines[-1].render()
                     if pg.key.get_mods() & pg.KMOD_SHIFT:
                         action = "spline_second_point"
                         things.update({"point": point_temp})
@@ -78,7 +77,6 @@ def run_scene(screen):
             hover_spline.node_2.position = np.array(pg.mouse.get_pos())
             hover_spline.mode = 2
             hover_spline.recalculate()
-            hover_spline.render()
             hover_spline.draw(screen)
 
         for spline in splines:

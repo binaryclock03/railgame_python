@@ -8,5 +8,5 @@ class GameObject():
         if self.visible:
             self._draw()
 
-    def _draw(self):
+    def _draw(self, surface):
         pass

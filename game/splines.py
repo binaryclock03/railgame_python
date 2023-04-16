@@ -111,9 +111,16 @@ class Spline():
 
         self.points = points
 
-    def render(self):
-        pass
-        
+        #calculate spline length
+        length = 0
+        for i, point in enumerate(points):
+            if i == 0:
+                p_last = point
+            else:
+                length += np.linalg.norm(p_last-point)
+                p_last = point
+        self.length = length
+    
     def set_d1(self, d1):
         if d1 is None:  
             self._d1    = None
@@ -138,6 +145,21 @@ class Spline():
 
     def draw(self, surface):
         pg.draw.aalines(surface, BLACK, False, self.points)
+
+    def get_point_along_length(self, xi):
+        len_to = xi * self.length
+        cur_len = 0
+        for i, point in enumerate(self.points):
+            if i == 0:
+                p_last = point
+            else:
+                cur_len += np.linalg.norm(p_last-point)
+                p_last = point
+            
+            if cur_len >= len_to:
+                return p_last
+        
+        return p_last
 
 class SplineNode():
     def __init__(self, position:tuple) -> None:
