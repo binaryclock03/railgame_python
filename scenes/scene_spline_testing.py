@@ -1,10 +1,11 @@
 import pygame as pg
 import sys
-from game.rails.splines import Spline as Spline, SplineNode
 from CONSTANTS import WHITE
+from game.rails.splines import Spline as Spline, SplineNode
 from game.menuObject import ImageFont, load_image, Button
-import numpy as np
 from game.rails.action import Action
+
+import numpy as np
 
 def run_scene(screen):
     running = True
@@ -12,9 +13,10 @@ def run_scene(screen):
 
     action = Action()
     import game.rails.rail_placer
-    rail_placer = game.rails.rail_placer.RailPlacer(action)
+    import game.rails.rails
+    rail_layer = game.rails.rails.RailLayer()
+    rail_placer = game.rails.rail_placer.RailPlacer(rail_layer, action)
 
-    global splines 
     splines = []
 
     font_pixel = ImageFont("fonts\pixel_small", scale=3)
@@ -52,6 +54,8 @@ def run_scene(screen):
 
         for spline in splines:
             spline.draw(screen)
+
+        rail_layer.draw_rails(screen)
         
         if menu_objects.get("Make Spline").draw(screen):
             action.update_action("spline_first_point")

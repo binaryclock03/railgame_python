@@ -17,8 +17,8 @@ class Id1():
     def from_pos(self, pos):
         if pos is list: pos = np.array(pos)
         
-        if len(str(pos[0])) > ID_STR_LEN/2 or len(str(pos[1])) > ID_STR_LEN/2:
-            print("[WARNING] inputed positions too large for current ID_STR_LEN, will continue with errors")
+        # if len(pos[0]) > ID_STR_LEN/2 or len(pos[1]) > ID_STR_LEN/2:
+        #     print("[WARNING] inputed positions too large for current ID_STR_LEN, will continue with errors")
 
         self.id1 = pos[0]*10**(ID_STR_LEN/2) + pos[1]
 
@@ -43,8 +43,8 @@ class Id2():
         '''defines internal id1 from the given point'''
         if pos is list: pos = np.array(pos)
         
-        if len(str(pos[0])) > ID_STR_LEN/2 or len(str(pos[1])) > ID_STR_LEN/2:
-            print("[WARNING] inputed positions too large for current ID_STR_LEN, will continue with errors")
+        # if len(pos[0]) > ID_STR_LEN/2 or len(pos[1]) > ID_STR_LEN/2:
+        #     print("[WARNING] inputed positions for pos 1 too large for current ID_STR_LEN, will continue with errors")
 
         self.id1 = pos[0]*10**(ID_STR_LEN/2) + pos[1]
     
@@ -52,8 +52,8 @@ class Id2():
         '''defines internal id2 from the given point'''
         if pos is list: pos = np.array(pos)
         
-        if len(str(pos[0])) > ID_STR_LEN/2 or len(str(pos[1])) > ID_STR_LEN/2:
-            print("[WARNING] inputed positions too large for current ID_STR_LEN, will continue with errors")
+        # if len(pos[0]) > ID_STR_LEN/2 or len(pos[1]) > ID_STR_LEN/2:
+        #     print("[WARNING] inputed positions for pos 2 too large for current ID_STR_LEN, will continue with errors")
 
         self.id1 = pos[0]*10**(ID_STR_LEN/2) + pos[1]
     
