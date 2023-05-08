@@ -6,8 +6,20 @@ class Id1():
     '''A special kind of Id class that gives some usefull functions for dealing with node Ids'''
     id1:int
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.id1).zfill(ID_STR_LEN)
+    
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __eq__(self, __value: object) -> bool:
+        if isinstance(__value ,Id1):
+            if hash(self) == hash(__value):
+                return True
+        return False
+    
+    def __hash__(self) -> int:
+        return hash(repr(self))
     
     def as_pos(self):
         x = round(self.id1/10**(ID_STR_LEN/2))
@@ -23,7 +35,7 @@ class Id1():
         self.id1 = pos[0]*10**(ID_STR_LEN/2) + pos[1]
 
 class Id2():
-    '''A speical kind of Id class that allows two ids to be easily handeled for rails'''
+    '''A special kind of Id class that allows two ids to be easily handeled for rails'''
     id1:int
     id2:int
 

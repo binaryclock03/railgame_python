@@ -6,17 +6,31 @@ import numpy as np
 class RailNode():
     id:int
     node:SplineNode
-    mode:int
+    p_attached_rails:list = []
+    s_attached_rails:list = []
 
     def __init__(self, pos):
         pos = np.array([int(pos[0]),int(pos[1])])
-        self.id = Id1().from_pos(pos)
+        self.id = Id1()
+        self.id.from_pos(pos)
         self.node = SplineNode(pos)
-        self.mode = 0
     
     def get_dir(self) -> np.array:
-        pass
+        return self.p_attached_rails[0].spline.get_d2()
 
+    def get_mode(self) -> int:
+        return len(self.p_attached_rails)
+
+    def attach_rail(self, rail):
+        print("test")
+        if len(self.p_attached_rails) >= 2:
+            self.s_attached_rails.append(rail)
+        else:
+            self.p_attached_rails.append(rail)
+    
+    def remove_rail(self, rail):
+        if rail in self.p_attached_rails:    pass
+        elif rail in self.s_attached_rails:  pass
 
 class Rail(GameObject):
     id:int
@@ -37,7 +51,17 @@ class Rail(GameObject):
         self.node_1=node1
         self.node_2=node2
 
-        self.spline = Spline(self.node_1.node, self.node_2.node)
+        if self.node_1.get_mode() > 1: d1 = self.node_1.get_dir()
+        else: d1 = None
+        if self.node_2.get_mode() > 1: d2 = self.node_2.get_dir()
+        else: d2 = None
+
+        print(self.node_1.get_mode())
+        print(self.node_1.p_attached_rails)
+        print(d1)
+        print(d2)
+        
+        self.spline = Spline(self.node_1.node, self.node_2.node, d1, d2)
         self.spline.recalculate()
     
     def set_railnode_1(self, railnode:RailNode):
@@ -57,47 +81,40 @@ class RailLayer():
     railscale = 1
 
     ## Creating rails
-    def create_rail1(self, pos1, pos2):
-        node_1 = RailNode(pos1)
-        node_2 = RailNode(pos2)
+    def create_rail(self, in1, in2):
+        if not in1 is RailNode: node_1 = RailNode(in1)
+        if not in2 is RailNode: node_2 = RailNode(in2)
 
-        id1 = Id1()
-        id1.from_pos(pos1)
-        id2 = Id1()
-        id2.from_pos(pos2)
+        id1 = node_1.id
+        id2 = node_2.id
 
-        if id1 in self.railnodes_id_ob.keys() or id2 in self.railnodes_id_ob.keys():
-            print("[WARNING] Rail node already exists at this location!")
-            return
-
-        self.railnodes_id_ob.update({id1: node_1})
-        self.railnodes_id_ob.update({id2: node_2})
+        id1_match, id2_match = False, False
+        for id in self.railnodes_id_ob.keys():
+            if id1 == id: id1_match = True
+            if id2 == id: id2_match = True
+                
+        if not id1_match: 
+            print("creating new node")
+            self.railnodes_id_ob.update({id1: node_1})
+        if not id2_match: 
+            print("creating new node")
+            self.railnodes_id_ob.update({id2: node_2})
 
         self._create_rail(id1, id2)
-
-    def create_rail2(self, node_id:Id1, pos2):
-        node_2 = RailNode(pos2)
-
-        id2 = Id1().from_pos(pos2)
-
-        if id2 in self.railnodes_id_ob.keys():
-            print("[WARNING] Rail node already exists at this location!")
-            return
-
-        self.railnodes_id_ob.update({id2, node_2})
-
-        self._create_rail(node_id, id2)
-
-    def create_rail3(self, node_id1:Id1, node_id2:Id1):
-        self._create_rail(node_id1, node_id2)
 
     def _create_rail(self, node_id1:Id1, node_id2:Id1):
         # create rail id using id2 to allow for the 2 ids to be store together
         rail_id = Id2()
         rail_id.from_pos([node_id1.as_pos(), node_id2.as_pos()])
 
+        node_1 = self.railnodes_id_ob.get(node_id1)
+        node_2 = self.railnodes_id_ob.get(node_id2)
+
         # create the rail object
-        rail = Rail(rail_id, self.railnodes_id_ob.get(node_id1), self.railnodes_id_ob.get(node_id2), self.railscale)
+        rail = Rail(rail_id, node_1, node_2, self.railscale)
+
+        node_1.attach_rail(rail)
+        node_2.attach_rail(rail)
 
         # put the rail object into the rails dict
         self.rails_id_ob.update({rail_id:rail})

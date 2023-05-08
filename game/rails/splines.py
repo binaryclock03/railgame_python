@@ -1,6 +1,6 @@
 import numpy as np
 import pygame as pg
-from CONSTANTS import BLACK
+from CONSTANTS import BLACK,GREEN
 import math
 
 class Spline():
@@ -81,8 +81,8 @@ class Spline():
             P3 = np.matmul(TM, P3)
             self.node_2.position = P3
 
-        elif self.mode == 3:
-            pass
+        # elif self.mode == 3:
+        #     pass
 
         else:
             P0 = self.node_1.position
@@ -145,6 +145,8 @@ class Spline():
 
     def draw(self, surface):
         pg.draw.aalines(surface, BLACK, False, self.points)
+        self.node_1.draw(surface)
+        self.node_2.draw(surface)
 
     def get_point_along_length(self, xi):
         len_to = xi * self.length
@@ -164,6 +166,9 @@ class Spline():
 class SplineNode():
     def __init__(self, position:tuple) -> None:
         self.position = np.array(position)
+    
+    def draw(self, surface) -> None:
+        pg.draw.circle(surface, GREEN, self.position, 5)
         
 def normalize(vector):
     return vector/np.linalg.norm(vector)

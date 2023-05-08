@@ -1,9 +1,11 @@
 import pygame as pg
 import sys
 from CONSTANTS import WHITE
-from game.rails.splines import Spline as Spline, SplineNode
+from game.rails.splines import Spline as Spline
 from game.menuObject import ImageFont, load_image, Button
 from game.rails.action import Action
+import game.rails.rail_placer
+import game.rails.rails
 
 import numpy as np
 
@@ -12,8 +14,6 @@ def run_scene(screen):
     game_paused = False
 
     action = Action()
-    import game.rails.rail_placer
-    import game.rails.rails
     rail_layer = game.rails.rails.RailLayer()
     rail_placer = game.rails.rail_placer.RailPlacer(rail_layer, action)
 
@@ -59,7 +59,7 @@ def run_scene(screen):
         
         if menu_objects.get("Make Spline").draw(screen):
             action.update_action("spline_first_point")
-            print("Started creating spline")
+            print("[DEBUG] Make spline button pressed")
 
         #print("FPS:" + str(1000/dt))
         pg.display.flip()
